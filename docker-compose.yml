@@ -1,0 +1,14 @@
+version: "3.7"
+services:
+
+  gtfs2cratedb:
+    build: .
+    image: gtfs2cratedb:0.0.1
+    env_file: .env
+    ports:
+      - "5000:5000"
+
+  crate-db:
+    image: "crate"
+    ports:
+      - "4200:4200"
