@@ -1,0 +1,4 @@
+FLASK_APP=src/server
+FLASK_RUN_PORT=5000
+
+CRATE_DB_HOST=localhost:4200

@@ -31,12 +31,10 @@ After installing above components, following command have to be executed from th
 pipenv install
 ```
 
-That's it!
-
-Last step is to execute command to run the application:
+and run the application:
 
 ```
-python src/server.py
+flask run
 ```
 
 This command starts Flask service and make it available for POST request to send GTFS feed by the following URL `http://localhost:5000/import`
@@ -44,10 +42,10 @@ This command starts Flask service and make it available for POST request to send
 Last point in this section is to run CrateDB as a persistance storage in container, to let service import GTFS feed:
 
 ```
-docker run -p "4200:4200" crate
+docker-compose up -d crate-db
 ```
 
-CrateDB instance gets spinned up and become accessible for the import service.
+CrateDB instance gets spinned up and becomes accessible for the import service.
 
 ## Performance improvements
 

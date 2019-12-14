@@ -4,7 +4,8 @@ from io import TextIOWrapper
 from zipfile import ZipFile
 from .crate_repository import CrateRepository
 
-IMPORT_ROWS_PER_QUERY_AMOUNT = os.environ.get('IMPORT_ROWS_PER_QUERY_AMOUNT', default=500)
+IMPORT_ROWS_PER_QUERY_AMOUNT = int(
+    os.environ.get('IMPORT_ROWS_PER_QUERY_AMOUNT'))
 
 
 # Unarchive Zip file with GTFS data and import each file from
@@ -35,3 +36,6 @@ def parse_single_file(zip_obj, file_name, repository):
             if len(rows) == IMPORT_ROWS_PER_QUERY_AMOUNT:
                 repository.insert_values(table_name, header_row, rows)
                 rows = []
+
+        if len(rows) > 0:
+            repository.insert_values(table_name, header_row, rows)

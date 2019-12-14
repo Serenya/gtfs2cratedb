@@ -5,6 +5,8 @@ services:
     build: .
     image: gtfs2cratedb:0.0.1
     env_file: .env
+    environment:
+      - CRATE_DB_HOST=crate-db:4200
     ports:
       - "5000:5000"
 

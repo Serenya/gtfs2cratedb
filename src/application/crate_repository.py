@@ -1,8 +1,7 @@
 import os
 from crate import client
-from crate.client.exceptions import ProgrammingError
 
-CRATE_DB_HOST = os.environ.get('CRATE_DB_HOST', default='localhost:4200')
+CRATE_DB_HOST = os.environ.get('CRATE_DB_HOST')
 
 
 # Persistance layer that abstracts CrateDB
@@ -13,15 +12,11 @@ class CrateRepository:
         self.__cursor__ = connection.cursor()
 
     def create_table(self, table_name, columns):
-        try:
-            create_query = """CREATE TABLE {} ({})""".format(
-                table_name,
-                ', '.join([c + ' STRING' for c in columns])
-            )
-            self.__cursor__.execute(create_query)
-        except ProgrammingError as e:
-            if "RelationAlreadyExists" not in e.message:
-                raise
+        create_query = """CREATE TABLE IF NOT EXISTS {} ({})""".format(
+            table_name,
+            ', '.join([c + ' STRING' for c in columns])
+        )
+        self.__cursor__.execute(create_query)
 
     def insert_values(self, table_name, columns, values):
         insert_query = """INSERT INTO {} ({}) VALUES ({})""".format(
