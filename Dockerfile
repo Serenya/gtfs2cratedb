@@ -11,4 +11,4 @@ COPY src/server.py ./server.py
 RUN pipenv install --system --deploy --ignore-pipfile
 
 EXPOSE 5000
-CMD [ "python", "-u", "server.py" ]
+ENTRYPOINT [ "python", "server.py" ]
